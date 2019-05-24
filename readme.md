@@ -99,3 +99,11 @@ php artisan make:scaffold Projects --schema="name:string:index,description:text:
  $ composer require "mews/purifier:~2.0"
  配置 
  $ php artisan vendor:publish --provider="Mews\Purifier\PurifierServiceProvider"
+
+## 安装依赖 Guzzle
+ Guzzle 库是一套强大的 PHP HTTP 请求套件，我们使用 Guzzle 的 HTTP 客户端来请求 百度翻译 接口。
+ composer require "guzzlehttp/guzzle:~6.3"
+
+## 安装依赖 PinYin
+是一套优质的汉字转拼音解决方案。我们使用 PinYin 来作为翻译的后备计划，当百度翻译 API 不可用时，程序会自动使用 PinYin 汉字转拼音方案来生成 Slug
+composer require "overtrue/pinyin:~3.0"
