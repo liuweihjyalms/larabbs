@@ -75,3 +75,11 @@ The Laravel framework is open-source software licensed under the [MIT license](h
  $ composer require "summerblue/generator:~1.0" --dev
 
 php artisan make:scaffold Projects --schema="name:string:index,description:text:nullable,subscriber_count:integer:unsigned:default(0)"
+
+## 页面调优 性能隐患 安装 Debugbar
+ $ composer require "barryvdh/laravel-debugbar:~3.2" --dev
+
+ 生成配置文件，存放位置 config/debugbar.php：
+ $ php artisan vendor:publish --provider="Barryvdh\Debugbar\ServiceProvider"
+
+ config/debugbar.php，将 enabled 的值设置为： 'enabled' => env('APP_DEBUG', false),
