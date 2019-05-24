@@ -83,3 +83,7 @@ php artisan make:scaffold Projects --schema="name:string:index,description:text:
  $ php artisan vendor:publish --provider="Barryvdh\Debugbar\ServiceProvider"
 
  config/debugbar.php，将 enabled 的值设置为： 'enabled' => env('APP_DEBUG', false),
+
+## 导航的 Active 状态
+
+ 使用 Composer 安装 hieu-le/active： $ composer require "hieu-le/active:~3.5"
