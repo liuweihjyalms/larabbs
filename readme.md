@@ -92,3 +92,4 @@ php artisan make:scaffold Projects --schema="name:string:index,description:text:
  Simditor 是 tower.im 团队的开源编辑器。
  https://github.com/mycolorway/simditor/releases/download/v2.3.6/simditor-2.3.6.zip
  将下载的 simditor.css 放置于 resources/editor/css 文件夹，将 hotkeys.js, module.js, simditor.js, uploader.js 四个文件放置于 resources/editor/js 文件夹中
+ 文档 https://simditor.tower.im/docs/doc-config.html#anchor-upload
