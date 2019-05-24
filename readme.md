@@ -87,3 +87,8 @@ php artisan make:scaffold Projects --schema="name:string:index,description:text:
 ## 导航的 Active 状态
 
  使用 Composer 安装 hieu-le/active： $ composer require "hieu-le/active:~3.5"
+
+## 编辑器优化
+ Simditor 是 tower.im 团队的开源编辑器。
+ https://github.com/mycolorway/simditor/releases/download/v2.3.6/simditor-2.3.6.zip
+ 将下载的 simditor.css 放置于 resources/editor/css 文件夹，将 hotkeys.js, module.js, simditor.js, uploader.js 四个文件放置于 resources/editor/js 文件夹中
