@@ -79,31 +79,58 @@ php artisan make:scaffold Projects --schema="name:string:index,description:text:
 ## 页面调优 性能隐患 安装 Debugbar
  $ composer require "barryvdh/laravel-debugbar:~3.2" --dev
 
- 生成配置文件，存放位置 config/debugbar.php：
- $ php artisan vendor:publish --provider="Barryvdh\Debugbar\ServiceProvider"
+生成配置文件，存放位置 config/debugbar.php：
+$ php artisan vendor:publish --provider="Barryvdh\Debugbar\ServiceProvider"
 
- config/debugbar.php，将 enabled 的值设置为： 'enabled' => env('APP_DEBUG', false),
+config/debugbar.php，将 enabled 的值设置为： 'enabled' => env('APP_DEBUG', false),
 
 ## 导航的 Active 状态
 
  使用 Composer 安装 hieu-le/active： $ composer require "hieu-le/active:~3.5"
 
 ## 编辑器优化
- Simditor 是 tower.im 团队的开源编辑器。
- https://github.com/mycolorway/simditor/releases/download/v2.3.6/simditor-2.3.6.zip
- 将下载的 simditor.css 放置于 resources/editor/css 文件夹，将 hotkeys.js, module.js, simditor.js, uploader.js 四个文件放置于 resources/editor/js 文件夹中
- 文档 https://simditor.tower.im/docs/doc-config.html#anchor-upload
+Simditor 是 tower.im 团队的开源编辑器。[编辑器下载](https://github.com/mycolorway/simditor/releases/download/v2.3.6/simditor-2.3.6.zip)
+ 
+将下载的 simditor.css 放置于 resources/editor/css 文件夹
+将 hotkeys.js, module.js, simditor.js, uploader.js 四个文件放置于 resources/editor/js 文件夹中
+- [文档](https://simditor.tower.im/docs/doc-config.html#anchor-upload) 
 
 ## HTMLPurifier for Laravel 5
- 安装 HTMLPurifier for Laravel 5
+安装 HTMLPurifier for Laravel 5
  $ composer require "mews/purifier:~2.0"
- 配置 
+
+配置 
  $ php artisan vendor:publish --provider="Mews\Purifier\PurifierServiceProvider"
 
 ## 安装依赖 Guzzle
- Guzzle 库是一套强大的 PHP HTTP 请求套件，我们使用 Guzzle 的 HTTP 客户端来请求 百度翻译 接口。
- composer require "guzzlehttp/guzzle:~6.3"
+Guzzle 库是一套强大的 PHP HTTP 请求套件，我们使用 Guzzle 的 HTTP 客户端来请求 百度翻译 接口。
+ $ composer require "guzzlehttp/guzzle:~6.3"
 
 ## 安装依赖 PinYin
 是一套优质的汉字转拼音解决方案。我们使用 PinYin 来作为翻译的后备计划，当百度翻译 API 不可用时，程序会自动使用 PinYin 汉字转拼音方案来生成 Slug
-composer require "overtrue/pinyin:~3.0"
+- $ composer require "overtrue/pinyin:~3.0"
+
+## 使用队列
+- $ composer require "predis/predis:~1.1"
+- env文件 QUEUE_CONNECTION=redis
+- 失败任务
+有时候队列中的任务会失败。Laravel 内置了一个方便的方式来指定任务重试的最大次数。当任务超出这个重试次数后，它就会被插入到 failed_jobs 数据表里面。我们可以使用 queue:failed-table 命令来创建 failed_jobs 表的迁移文件：
+- $ php artisan queue:failed-table
+- 生成任务类
+- 使用以下 Artisan 命令来生成一个新的队列任务：
+- $ php artisan make:job TranslateSlug
+- 开始之前，我们需要在命令行启动队列系统，队列在启动完成后会进入监听状态
+- $ php artisan queue:listen
+
+## 队列监控 Horizon
+- $ composer require "laravel/horizon:~3.1"
+- 安装完成后，使用 vendor:publish Artisan 命令发布相关文件：
+- $ php artisan vendor:publish --provider="Laravel\Horizon\HorizonServiceProvider"
+- 分别是配置文件 config/horizon.php 和存放在 public/vendor/horizon 文件夹中的 CSS 、JS 等页面资源文件。
+- 至此安装完毕，浏览器打开 http://loaclhost/horizon 访问控制台：
+- Horizon 是一个监控程序，需要常驻运行，我们可以通过以下命令启动：
+- $ php artisan horizon
+- 安装了 Horizon 以后，我们将使用 horizon 命令来启动队列系统和任务监控，无需使用 queue:listen
+- 线上部署须知
+- 使用 Supervisor 进程工具进行管理，配置和使用请参照 [文档 进行配置](https://learnku.com/docs/laravel/5.8/horizon/3945#Supervisor-%E9%85%8D%E7%BD%AE)
+- 每一次部署代码时，需 artisan horizon:terminate 然后再 artisan horizon 重新加载代码
