@@ -134,3 +134,9 @@ Guzzle 库是一套强大的 PHP HTTP 请求套件，我们使用 Guzzle 的 HTT
 - 线上部署须知
 - 使用 Supervisor 进程工具进行管理，配置和使用请参照 [文档 进行配置](https://learnku.com/docs/laravel/5.8/horizon/3945#Supervisor-%E9%85%8D%E7%BD%AE)
 - 每一次部署代码时，需 artisan horizon:terminate 然后再 artisan horizon 重新加载代码
+
+## Laravel 的消息通知系统
+- 通知频道是通知传播的途径，Laravel 自带的有数据库、邮件、短信（通过 Nexmo）以及 Slack。本章节中我们将使用数据库通知频道，后面也会使用到邮件通知频道。
+- 准备数据库 php artisan notifications:table
+- 生成通知类 php artisan make:notification TopicReplied
+- 触发通知
