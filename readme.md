@@ -148,3 +148,25 @@ Guzzle 库是一套强大的 PHP HTTP 请求套件，我们使用 Guzzle 的 HTT
 - 生成：
 - /public/sudo-su 前端 CSS 资源存放文件夹；
 - config/sudosu.php 配置信息文件。
+
+## 活跃用户
+系统 每一个小时 计算一次，统计 最近 7 天 所有用户发的 帖子数 和 评论数，用户每发一个帖子则得 4 分，每发一个回复得 1 分，计算出所有人的『得分』后再倒序，排名前八的用户将会显示在「活跃用户」列表里。假设用户 A 在 7 天内发了 10 篇帖子，发了 5 条评论，则其得分为
+- 10 * 4 + 5 * 1 = 45 
+- 编写逻辑代码 app/Models/Traits/ActiveUserHelper.php
+- Redis 作为缓存驱动:env CACHE_DRIVER=redis
+- User 模型中使用 Trait：
+
+## Artisan 命令
+- $ php artisan make:command CalculateActiveUser --command=larabbs:calculate-active-user
+- app/Console/Commands/CalculateActiveUser.php
+
+## 计划任务
+Laravel 命令调度器允许你在 Laravel 中对命令调度进行清晰流畅的定义，并且仅需要在服务器上增加一条 Cron 项目即可。调度在在 app/Console/Kernel.php 文件的 schedule 方法中定义。在该方法内包含了一个简单的例子，你可以随意增加调度到 Schedule 对象中
+
+- 使用调度器时，我们需要修改系统的 Cron 计划任务配置信息，运行以下命令：
+- $ export EDITOR=vi && crontab -e
+- 复制下面这一行：
+- * * * * * php /home/vagrant/Code/larabbs/artisan schedule:run >> /dev/null 2>&1
+- 系统的 Cron 已经设定好了，现在 Cron 软件将会每分钟调用一次 Laravel 命令调度器，当 schedule:run 命令执行时， Laravel 会评估你的计划任务并运行预定任务。 接下来将我们注册调度任务即可：
+- app/Console/Kernel.php
+- php artisan cache:clear 清空我们的缓存：
