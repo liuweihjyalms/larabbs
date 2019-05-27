@@ -140,3 +140,11 @@ Guzzle 库是一套强大的 PHP HTTP 请求套件，我们使用 Guzzle 的 HTT
 - 准备数据库 php artisan notifications:table
 - 生成通知类 php artisan make:notification TopicReplied
 - 触发通知
+
+## 用户切换工具 sudo-su
+- $ composer require "viacreative/sudo-su:~1.1"
+- 发布资源文件
+- $ php artisan vendor:publish --provider="VIACreative\SudoSu\ServiceProvider"
+- 生成：
+- /public/sudo-su 前端 CSS 资源存放文件夹；
+- config/sudosu.php 配置信息文件。
