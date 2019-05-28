@@ -203,3 +203,10 @@ Laravel 命令调度器允许你在 Laravel 中对命令调度进行清晰流畅
 - Accept: application/prs.larabbs.v1+json
 - 访问 v2 版本
 - Accept: application/prs.larabbs.v2+json
+
+## 安装 easy-sms
+- [easy-sms](https://github.com/overtrue/easy-sms)是安正超写的一个短信发送组件，利用这个组件，我们可以快速的实现短信发送功能
+- composer require "overtrue/easy-sms"
+- 由于该组件还没有 Laravel 的 ServiceProvider，须要封装一下。
+- 然后创建一个 ServiceProvider
+- config/app.php 在 providers 中增加 App\Providers\EasySmsServiceProvider::class,
