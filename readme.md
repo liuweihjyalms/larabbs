@@ -170,3 +170,36 @@ Laravel 命令调度器允许你在 Laravel 中对命令调度进行清晰流畅
 - 系统的 Cron 已经设定好了，现在 Cron 软件将会每分钟调用一次 Laravel 命令调度器，当 schedule:run 命令执行时， Laravel 会评估你的计划任务并运行预定任务。 接下来将我们注册调度任务即可：
 - app/Console/Kernel.php
 - php artisan cache:clear 清空我们的缓存：
+
+## RESTful 设计风格
+
+- 安全可靠，高效，易扩展。
+- 简单明了，可读性强，没有歧义。
+- API 风格统一，调用规则，传入参数和返回数据有统一的标准。
+
+## 版本控制
+随着业务的发展，需求的不断变化，API 的迭代是必然的，很可能当前版本正在使用，而我们就得开发甚至上线一个不兼容的新版本，为了让旧用户可以正常使用，为了保证开发的顺利进行，我们需要控制好 API 的版本。
+- 将版本号直接加入 URL 中
+- https://api.larabbs.com/v1
+- https://api.larabbs.com/v2
+- 使用 HTTP 请求头的 Accept 字段进行区分
+- https://api.larabbs.com/
+-- Accept: application/prs.larabbs.v1+json
+-- Accept: application/prs.larabbs.v2+json
+- 数据响应格式
+- https://api.larabbs.com/
+-- Accept: application/prs.larabbs.v1+json
+-- Accept: application/prs.larabbs.v1+xml
+- 调用频率限制
+
+## 安装 DingoAPI
+- composer require dingo/api
+- 配置 php artisan vendor:publish --provider="Dingo\Api\Provider\LaravelServiceProvider"
+- API_STANDARDS_TREE 有是三个值可选
+- x 本地开发的或私有环境的
+- prs 未对外发布的，提供给公司 app，单页应用，桌面应用等
+- vnd 对外发布的，开放给所有用户
+- 访问 v1 版本
+- Accept: application/prs.larabbs.v1+json
+- 访问 v2 版本
+- Accept: application/prs.larabbs.v2+json
