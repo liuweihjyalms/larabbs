@@ -171,7 +171,7 @@ Laravel 命令调度器允许你在 Laravel 中对命令调度进行清晰流畅
 - app/Console/Kernel.php
 - php artisan cache:clear 清空我们的缓存：
 
-## RESTful 设计风格
+## RESTful 设计风格 API
 
 - 安全可靠，高效，易扩展。
 - 简单明了，可读性强，没有歧义。
@@ -210,3 +210,41 @@ Laravel 命令调度器允许你在 Laravel 中对命令调度进行清晰流畅
 - 由于该组件还没有 Laravel 的 ServiceProvider，须要封装一下。
 - 然后创建一个 ServiceProvider
 - config/app.php 在 providers 中增加 App\Providers\EasySmsServiceProvider::class,
+
+## OAuth 2.0 协议
+所谓的第三方登录，就是利用用户在第三方平台上已有的账号来快速完成自己应用的登录或者注册的功能，常用的协议为 OAuth 2.0，基本上每个 APP，都会集成微信，微博等第三方登录，方便用户快速的登录并开始使用。
+简单的解释一下流程
+
+- 1、客户端（app / 浏览器）将用户导向第三方认证服务器
+- 2、用户在第三方认证服务器，选择是否给予客户端授权
+- 3、用户同意授权后，认证服务器将用户导向客户端事先指定的 重定向URI，同时附上一个授权码。
+- 4、客户端将授权码发送至服务器，服务器通过授权码以及 APP_SECRET 向第三方服务器申请 access_token
+- 5、服务器通过 access_token，向第三方服务器申请用户数据，完成登录流程
+
+## 第三方登录 （微信登录）
+socialiteproviders 为 Laravel Socialite 提供了更多的第三方登录方式，基本上你需要的，都能在这里找到。这个组件方便我们完成整个 OAuth 流程，不过对于我们开发接口来说，只用到了它部分的功能。 首先找到 微信的 provider，一步步完成安装。
+
+- composer require socialiteproviders/weixin
+
+- 设置 EventServiceProvider
+- config/services.php
+'weixin' => [
+    'client_id' => env('WEIXIN_KEY'),
+    'client_secret' => env('WEIXIN_SECRET'),
+    'redirect' => env('WEIXIN_REDIRECT_URI'),  
+], 
+
+- $accessToken = 'ACCESS_TOKEN';
+- $openID = 'OPEN_ID';
+- $driver = Socialite::driver('weixin');
+- $driver->setOpenId($openID);
+- $oauthUser = $driver->userFromToken($accessToken);
+
+- $code = 'CODE';
+- $driver = Socialite::driver('weixin');
+- $response = $driver->getAccessTokenResponse($code);
+- $driver->setOpenId($response['openid']);
+- $oauthUser = $driver->userFromToken($response['access_token']);
+
+- 最终服务器获取了用户在微信的用户信息，这一点很重要，无论使用上面哪种方式，都一定要保证用户数据是服务器自己通过 access_token 获取的，还有这样才能验证客户端提交数据（ code 或 access_token ）的真实性。获取到的用户数据如下
+- 如果开发者拥有多个移动应用、网站应用、和公众帐号（包括小程序），可通过 unionid 来区分用户的唯一性，因为只要是同一个微信开放平台帐号下的移动应用、网站应用和公众帐号（包括小程序），用户的 unionid 是唯一的。换句话说，同一用户，对同一个微信开放平台下的不同应用，unionid 是相同的。
