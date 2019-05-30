@@ -260,3 +260,7 @@ socialiteproviders 为 Laravel Socialite 提供了更多的第三方登录方式
 - 安装完成后，我们需要设置一下 JWT 的 secret，这个 secret 很重要，用于最后的签名，更换这个 secret 会导致之前生成的所有 token 无效
 - php artisan jwt:secret
 - php artisan larabbs:generate-token 生成一个token用与测试一年过期
+
+## API N+1 问题以及查询日志
+- [laravel-query-logger](https://github.com/overtrue/laravel-query-logger)
+- composer require overtrue/laravel-query-logger --dev
