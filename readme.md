@@ -248,3 +248,14 @@ socialiteproviders 为 Laravel Socialite 提供了更多的第三方登录方式
 
 - 最终服务器获取了用户在微信的用户信息，这一点很重要，无论使用上面哪种方式，都一定要保证用户数据是服务器自己通过 access_token 获取的，还有这样才能验证客户端提交数据（ code 或 access_token ）的真实性。获取到的用户数据如下
 - 如果开发者拥有多个移动应用、网站应用、和公众帐号（包括小程序），可通过 unionid 来区分用户的唯一性，因为只要是同一个微信开放平台帐号下的移动应用、网站应用和公众帐号（包括小程序），用户的 unionid 是唯一的。换句话说，同一用户，对同一个微信开放平台下的不同应用，unionid 是相同的。
+
+## 登录 API 获取 JWT 令牌(JWT)
+
+- JWT 是 JSON Web Token 的缩写，是一个非常轻巧的规范，这个规范允许我们使用 JWT 在用户和服务器之间传递安全可靠的信息。 JWT 由头部（header）、载荷（payload）与签名（signature）组成
+- JWT 最后是通过 Base64 编码的，也就是说，它可以被翻译回原来的样子来的。所以不要在 JWT 中存放一些敏感信息
+
+- 安装 [jwt-auth](https://github.com/tymondesigns/jwt-auth)
+- composer require tymon/jwt-auth:1.0.0-rc.4.1
+
+- 安装完成后，我们需要设置一下 JWT 的 secret，这个 secret 很重要，用于最后的签名，更换这个 secret 会导致之前生成的所有 token 无效
+- php artisan jwt:secret

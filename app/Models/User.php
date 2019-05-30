@@ -2,13 +2,15 @@
 
 namespace App\Models;
 
+use Spatie\Permission\Traits\HasRoles;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Auth\MustVerifyEmail as MustVerifyEmailTrait;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Contracts\Auth\MustVerifyEmail as MustVerifyEmailContract;
 use Auth;
 
-class User extends Authenticatable implements MustVerifyEmailContract
+class User extends Authenticatable implements MustVerifyEmailContract, JWTSubject
 {
     use MustVerifyEmailTrait;
     use Traits\ActiveUserHelper;
@@ -45,6 +47,18 @@ class User extends Authenticatable implements MustVerifyEmailContract
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    //jwt
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    //jwt
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
 
     public function markAsRead()
     {

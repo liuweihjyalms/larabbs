@@ -32,9 +32,18 @@ $api->version('v1', [
         // 用户注册
         $api->post('users', 'UsersController@store')
             ->name('api.users.store');
+        // 登录
+        $api->post('authorizations', 'AuthorizationsController@store')
+            ->name('api.authorizations.store');
         // 第三方登录
         $api->post('socials/{social_type}/authorizations', 'AuthorizationsController@socialStore')
             ->name('api.socials.authorizations.store');
+        // 刷新token
+        $api->put('authorizations/current', 'AuthorizationsController@update')
+            ->name('api.authorizations.update');
+        // 删除token
+        $api->delete('authorizations/current', 'AuthorizationsController@destroy')
+            ->name('api.authorizations.destroy');
     });
 });
 
