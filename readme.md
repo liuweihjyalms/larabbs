@@ -264,3 +264,8 @@ socialiteproviders 为 Laravel Socialite 提供了更多的第三方登录方式
 ## API N+1 问题以及查询日志
 - [laravel-query-logger](https://github.com/overtrue/laravel-query-logger)
 - composer require overtrue/laravel-query-logger --dev
+
+## 消息推送 极光推送
+- [极光推送](https://www.jiguang.cn/)是我们常用的第三方推送服务商，以下简称 Jpush。Jpush 同时支持 iOS 和 Android 平台的消息推送，服务器只需要实现一套代码即可。我们先来 注册 一个 Jpush 账号。
+- 安装 Jpush SDK
+- composer require jpush/jpush
