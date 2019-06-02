@@ -274,5 +274,6 @@ socialiteproviders 为 Laravel Socialite 提供了更多的第三方登录方式
 由于是将原有的认证方式 JWT，替换为 OAuth2，所以我们新建一个分支来进行代码开发
 - Composer 安装  composer require laravel/passport
 - 生成数据表     php artisan migrate
+- 创建加密秘钥   php artisan passport:keys 
 - 创建客户端     php artisan passport:client --password --name='larabbs-ios'
 - 注册路由       app/Providers/AuthServiceProvider.php
