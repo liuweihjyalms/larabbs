@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Laravel\Passport\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
@@ -15,6 +16,7 @@ class User extends Authenticatable implements MustVerifyEmailContract, JWTSubjec
     use MustVerifyEmailTrait;
     use Traits\ActiveUserHelper;
     use Traits\LastActivedAtHelper;
+    use HasApiTokens;
 
     use Notifiable {
         notify as protected laravelNotify;
@@ -65,6 +67,15 @@ class User extends Authenticatable implements MustVerifyEmailContract, JWTSubjec
         $this->notification_count = 0;
         $this->save();
         $this->unreadNotifications->markAsRead();
+    }
+
+    public function findForPassport($username)
+    {
+        filter_var($username, FILTER_VALIDATE_EMAIL) ?
+          $credentials['email'] = $username :
+          $credentials['phone'] = $username;
+
+        return self::where($credentials)->first();
     }
 
     public function notify($instance)
