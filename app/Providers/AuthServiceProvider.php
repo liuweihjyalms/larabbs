@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use Carbon\Carbon;
+use Laravel\Passport\Passport;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -31,6 +33,14 @@ class AuthServiceProvider extends ServiceProvider
             // 动态返回模型对应的策略名称，如：// 'App\Model\User' => 'App\Policies\UserPolicy',
             return 'App\Policies\\'.class_basename($modelClass).'Policy';
         });
+
+        // Passport 的路由
+        Passport::routes();
+        // access_token 过期时间
+        Passport::tokensExpireIn(Carbon::now()->addDays(15));
+        // refreshTokens 过期时间
+        Passport::refreshTokensExpireIn(Carbon::now()->addDays(30));
+        
         \Horizon::auth(function ($request) {
             // 是否是站长
             //composer require "spatie/laravel-permission:~2.29"

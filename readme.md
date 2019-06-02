@@ -269,3 +269,10 @@ socialiteproviders 为 Laravel Socialite 提供了更多的第三方登录方式
 - [极光推送](https://www.jiguang.cn/)是我们常用的第三方推送服务商，以下简称 Jpush。Jpush 同时支持 iOS 和 Android 平台的消息推送，服务器只需要实现一套代码即可。我们先来 注册 一个 Jpush 账号。
 - 安装 Jpush SDK
 - composer require jpush/jpush
+
+## Passport 安装
+由于是将原有的认证方式 JWT，替换为 OAuth2，所以我们新建一个分支来进行代码开发
+- Composer 安装  composer require laravel/passport
+- 生成数据表     php artisan migrate
+- 创建客户端     php artisan passport:client --password --name='larabbs-ios'
+- 注册路由       app/Providers/AuthServiceProvider.php
