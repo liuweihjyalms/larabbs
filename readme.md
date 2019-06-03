@@ -269,3 +269,8 @@ socialiteproviders 为 Laravel Socialite 提供了更多的第三方登录方式
 - [极光推送](https://www.jiguang.cn/)是我们常用的第三方推送服务商，以下简称 Jpush。Jpush 同时支持 iOS 和 Android 平台的消息推送，服务器只需要实现一套代码即可。我们先来 注册 一个 Jpush 账号。
 - 安装 Jpush SDK
 - composer require jpush/jpush
+
+## 安装 EasyWeChat
+回到 LaraBBS 项目中，我们需要调用微信的接口，加密解密微信接口数据，为了加快开发，我们使用 EasyWeChat 进行开发，[EasyWeChat](https://github.com/overtrue/wechat) 已经封装好了微信相关的接口，非常方便使用，本教程我们只使用其中小程序的部分。
+- composer require "overtrue/laravel-wechat:~4.0" 
+- 发布配置文件 php artisan vendor:publish --provider="Overtrue\LaravelWeChat\ServiceProvider"
