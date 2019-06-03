@@ -277,3 +277,8 @@ socialiteproviders 为 Laravel Socialite 提供了更多的第三方登录方式
 - 创建加密秘钥   php artisan passport:keys 
 - 创建客户端     php artisan passport:client --password --name='larabbs-ios'
 - 注册路由       app/Providers/AuthServiceProvider.php
+
+## 安装 EasyWeChat
+回到 LaraBBS 项目中，我们需要调用微信的接口，加密解密微信接口数据，为了加快开发，我们使用 EasyWeChat 进行开发，[EasyWeChat](https://github.com/overtrue/wechat) 已经封装好了微信相关的接口，非常方便使用，本教程我们只使用其中小程序的部分。
+- composer require "overtrue/laravel-wechat:~4.0" 
+- 发布配置文件 php artisan vendor:publish --provider="Overtrue\LaravelWeChat\ServiceProvider"
