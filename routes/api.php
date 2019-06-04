@@ -53,6 +53,10 @@ $api->version('v1', [
         $api->post('weapp/users', 'UsersController@weappStore')
             ->name('api.weapp.users.store');
 
+        // 用户详情
+        $api->get('users/{user}', 'UsersController@show')
+             ->name('api.users.show');
+
         //分类列表
         $api->get('categories', 'CategoriesController@index')
             ->name('api.categories.index');
